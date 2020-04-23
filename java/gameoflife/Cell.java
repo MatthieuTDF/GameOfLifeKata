@@ -24,7 +24,12 @@ public class Cell {
     }
 
     static boolean processState(boolean isAlive, int nbNeighbourCellsAlive) {
-        // TODO
-        return false;
+        if (nbNeighbourCellsAlive == 3) {
+            return true;
+        }
+        else if (isAlive && nbNeighbourCellsAlive == 2) {
+            return true;
+        }
+        else return false;
     }
 }

@@ -19,15 +19,96 @@ public class Grid {
     }
 
     private void generateRandomInitialState() {
-        // TODO
+        this.cells = new Cell[sizeGrid][sizeGrid];
+        for (int i=0; i<sizeGrid; i++) {
+            for (int j=0; j<sizeGrid; j++) {
+                this.cells[i][j] = new Cell(rd.nextBoolean());
+            }
+        }
+    }
+
+    public int getnbAliveNeighbours(int i, int j) {
+        int result =0;
+        for (int k=i-1; k<i+2; k++) {
+            for (int l=j-1; l<j+2; l++) {
+                if (!(k==i && l==j)) {
+                    if (k<0) {
+                        if (l<0) {
+                            if (this.cells[k+this.sizeGrid][l+this.sizeGrid].isAlive()) {
+                                result++;
+                            }
+                        }
+                        else if (l<this.sizeGrid) {
+                            if (this.cells[k+this.sizeGrid][l].isAlive()) {
+                                result++;
+                            }
+                        }
+                        else if (this.cells[k+this.sizeGrid][0].isAlive()) {
+                            result++;
+                        }
+                    }
+                    else if (k<this.sizeGrid) {
+                        if (l<0) {
+                            if (this.cells[k][l+this.sizeGrid].isAlive()) {
+                                result++;
+                            }
+                        }
+                        else if (l<this.sizeGrid) {
+                            if (this.cells[k][l].isAlive()) {
+                                result++;
+                            }
+                        }
+                        else if (this.cells[k][0].isAlive()) {
+                            result++;
+                        }
+                    }
+                    else {
+                        if (l<0) {
+                            if (this.cells[0][l+this.sizeGrid].isAlive()) {
+                                result++;
+                            }
+                        }
+                        else if (l<this.sizeGrid) {
+                            if (this.cells[0][l].isAlive()) {
+                                result++;
+                            }
+                        }
+                        else if (this.cells[0][0].isAlive()) {
+                            result++;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     public void generateNextState() {
-        // TODO
+        int[][] nbAliveNeighbours = new int[this.sizeGrid][this.sizeGrid];
+        for (int i=0; i<sizeGrid; i++) {
+            for (int j=0; j<sizeGrid; j++) {
+                nbAliveNeighbours[i][j] = getnbAliveNeighbours(i, j);
+            }
+        }
+        for (int i=0; i<sizeGrid; i++) { // getnbAliveNeighbours
+            for (int j=0; j<sizeGrid; j++) {
+                this.cells[i][j].setIsAlive(Cell.processState(this.cells[i][j].isAlive(), nbAliveNeighbours[i][j]));
+            }
+        }
     }
 
     public String toString() {
-        // TODO
-        return "";
+        // return this.cells.toString();
+        String result = "";
+        for (int i=0; i<this.sizeGrid; i++) {
+            for (int j=0; j<this.sizeGrid; j++) {
+                result = result.concat(this.cells[i][j].toString());
+                if (j!=this.sizeGrid-1)
+                    result = result.concat(" ");
+            }
+            if (i != this.sizeGrid-1)
+                result = result.concat("\n");
+        }
+        return result;
     }
 }
