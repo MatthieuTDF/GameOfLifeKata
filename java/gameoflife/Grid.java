@@ -32,48 +32,8 @@ public class Grid {
         for (int k=i-1; k<i+2; k++) {
             for (int l=j-1; l<j+2; l++) {
                 if (!(k==i && l==j)) {
-                    if (k<0) {
-                        if (l<0) {
-                            if (this.cells[k+this.sizeGrid][l+this.sizeGrid].isAlive()) {
-                                result++;
-                            }
-                        }
-                        else if (l<this.sizeGrid) {
-                            if (this.cells[k+this.sizeGrid][l].isAlive()) {
-                                result++;
-                            }
-                        }
-                        else if (this.cells[k+this.sizeGrid][0].isAlive()) {
-                            result++;
-                        }
-                    }
-                    else if (k<this.sizeGrid) {
-                        if (l<0) {
-                            if (this.cells[k][l+this.sizeGrid].isAlive()) {
-                                result++;
-                            }
-                        }
-                        else if (l<this.sizeGrid) {
-                            if (this.cells[k][l].isAlive()) {
-                                result++;
-                            }
-                        }
-                        else if (this.cells[k][0].isAlive()) {
-                            result++;
-                        }
-                    }
-                    else {
-                        if (l<0) {
-                            if (this.cells[0][l+this.sizeGrid].isAlive()) {
-                                result++;
-                            }
-                        }
-                        else if (l<this.sizeGrid) {
-                            if (this.cells[0][l].isAlive()) {
-                                result++;
-                            }
-                        }
-                        else if (this.cells[0][0].isAlive()) {
+                    if (k>=0 && l>=0 && k<this.sizeGrid && l<this.sizeGrid) {
+                        if (this.cells[k][l].isAlive()) {
                             result++;
                         }
                     }
